@@ -26,7 +26,6 @@ launcher/hs_err_pid*.log
 launcher/replay_pid*.log
 
 # Local / generated
-screenshot-latest.png
 *.log
 .tmp/
 temp/
