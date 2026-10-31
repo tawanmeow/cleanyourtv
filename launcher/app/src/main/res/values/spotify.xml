@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="spotify_widget_width">210dp</dimen>
+    <string name="spotify_access_name">Spotify Now Playing</string>
+    <string name="spotify_label" translatable="false">SPOTIFY</string>
+    <string name="spotify_unknown_title">Unknown track</string>
+    <string name="spotify_playing">Playing</string>
+    <string name="spotify_paused">Paused</string>
+    <string name="spotify_stopped">Stopped</string>
+    <string name="spotify_loading">Loading</string>
+    <string name="spotify_previous">Previous track</string>
+    <string name="spotify_next">Next track</string>
+    <string name="spotify_play">Play</string>
+    <string name="spotify_pause">Pause</string>
+    <!-- Adjust here for a different installed Spotify variant. -->
+    <string-array name="spotify_session_packages" translatable="false">
+        <item>com.spotify.tv.android</item>
+    </string-array>
+    <style name="SpotifyText">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:fontFamily">@font/jetbrains_mono_regular</item>
+        <item name="android:textColor">@color/tokyo_secondary</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    <style name="SpotifyControl">
+        <item name="android:layout_width">20dp</item>
+        <item name="android:layout_height">20dp</item>
+        <item name="android:background">@drawable/spotify_control_background</item>
+        <item name="android:tint">@color/spotify_control_ink</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">0dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+</resources>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Retain the existing resource names so focus and navigation code are unchanged. -->
+    <color name="terminal_green">#63B3FF</color>
+    <color name="terminal_edge">#3863B3FF</color>
+    <color name="tokyo_text">#D7E3FF</color>
+    <color name="tokyo_secondary">#A9B8D6</color>
+    <color name="tokyo_muted">#66779C</color>
+    <color name="tokyo_purple">#9B7BFF</color>
+    <color name="tokyo_background">#101624</color>
+    <color name="tokyo_panel">#C70F1422</color>
+    <string name="terminal_open_hint" translatable="false">Press ← ↑ ↓ → or OK</string>
+    <string name="status_signature" translatable="false">Aqua Celestia</string>
+</resources>

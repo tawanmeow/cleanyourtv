@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="launcher_idle_hint" translatable="false">Idle Mode • Press ← ↑ ↓ → or OK to open apps.</string>
+</resources>

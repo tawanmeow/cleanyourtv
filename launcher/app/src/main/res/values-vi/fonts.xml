@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bundled JetBrains Mono; Android supplies glyph fallback for scripts outside the font. -->
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="ReferenceType">
+    <string name="font_body" translatable="false">@font/jetbrains_mono_regular</string>
+    <string name="font_regular" translatable="false">@font/jetbrains_mono_regular</string>
+    <string name="font_light" translatable="false">@font/jetbrains_mono_medium</string>
+    <string name="font_extralight" translatable="false">@font/jetbrains_mono_regular</string>
+    <string name="font_medium" translatable="false">@font/jetbrains_mono_semibold</string>
+</resources>
