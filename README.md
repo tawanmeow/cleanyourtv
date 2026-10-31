@@ -3,7 +3,7 @@
 ![CleanYourTV launcher screenshot](screenshot-latest.png)
 Downstairs is done. Next, I'll move upstairs. :D
 
-All message below generated from Codex - Thanks Gathin23
+All message below generated from Codex
 
 ## Files included for use on another computer or TV
 
@@ -88,21 +88,3 @@ python tools/update_custom_manifest.py
 ```
 
 Then run `tools/install_custom_bundle.py` to install the updated bundle.
-
-## Push to Git
-
-Run from the repository root:
-
-```text
-git init
-git add .
-git status
-git commit -m "Custom TV launcher with Spotify and wallpaper slideshow"
-git branch -M main
-git remote add origin YOUR_GIT_REMOTE
-git push -u origin main
-```
-
-Skip `git init` or `git remote add` if the repository or remote already exists.
-The `.gitignore` explicitly allows APKs in `distribution/apk/`. Gradle caches, build outputs,
-`local.properties`, signing keys, and TV backups remain excluded from Git.
