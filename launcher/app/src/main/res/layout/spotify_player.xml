@@ -10,7 +10,7 @@
     android:padding="8dp"
     android:background="@drawable/spotify_widget_panel"
     android:visibility="gone">
-    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+    <LinearLayout android:id="@+id/spotifyHeader" android:layout_width="match_parent" android:layout_height="wrap_content"
         android:orientation="horizontal" android:gravity="center_vertical">
         <TextView style="@style/SpotifyText" android:layout_width="0dp" android:layout_weight="1"
             android:text="@string/spotify_label" android:textColor="@color/tokyo_text"
@@ -45,7 +45,7 @@
             android:progressDrawable="@drawable/spotify_progress_track" android:indeterminate="false"
             android:max="1000" android:padding="0dp" android:importantForAccessibility="no" />
     </LinearLayout>
-    <LinearLayout android:layout_width="match_parent" android:layout_height="26dp"
+    <LinearLayout android:id="@+id/spotifyControls" android:layout_width="match_parent" android:layout_height="26dp"
         android:layout_marginTop="5dp" android:gravity="center" android:orientation="horizontal"
         android:clipChildren="false" android:clipToPadding="false">
         <ImageButton android:id="@+id/spotifyPrevious" style="@style/SpotifyControl"

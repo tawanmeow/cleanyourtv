@@ -1,7 +1,7 @@
 {
   "format_version": 1,
   "application_id": "com.gathin.tvhome.terminal",
-  "wallpaper_count": 23,
+  "wallpaper_count": 50,
   "rotation_minutes": 2,
   "order": "shuffle",
   "cycle": "all-images-before-repeat",
@@ -9,8 +9,8 @@
   "files": [
     {
       "path": "apk/CleanYourTV.apk",
-      "bytes": 606834,
-      "sha256": "faa39c1ffdebf1709a4fca31f7bc1883860ca764203c1099c5c5b91c12d7c393"
+      "bytes": 607186,
+      "sha256": "9c31898556e4f6e3800fdd5dc25cbe7d6cfd6aa03097af0f98fc88cc0c8a814f"
     },
     {
       "path": "theme/config.json",
@@ -19,8 +19,8 @@
     },
     {
       "path": "theme/wallpapers/01-pic1.png",
-      "bytes": 2494047,
-      "sha256": "a4a554e8b03cdf94f0a95a9bc08a49ee79b3f79867575f495163559adc99d190"
+      "bytes": 2797043,
+      "sha256": "e73067861faf815f2652353b4679b1c461b1a52b89518bc507b4de7486def45c"
     },
     {
       "path": "theme/wallpapers/02-pic2.png",
@@ -29,13 +29,13 @@
     },
     {
       "path": "theme/wallpapers/03-pic3.png",
-      "bytes": 2256796,
-      "sha256": "c2b514369e61ddbd4c8c1ef49c6d75df566ae9f3a46d6470751cdadab853b368"
+      "bytes": 2185055,
+      "sha256": "425aeb79f882034b0b91a3256f9026a556074852c9d32de0bc823ed832747f1c"
     },
     {
       "path": "theme/wallpapers/04-pic4.png",
-      "bytes": 1848482,
-      "sha256": "67ecc9bf86a3d80f08dcd19b6d38c670bd04edb72208a8d48fa7ba61e5fbc93f"
+      "bytes": 2055653,
+      "sha256": "6b97a01fbd792262bde895fa1b03873ebc578f9b9e827e2e76be19657ce30b74"
     },
     {
       "path": "theme/wallpapers/05-pic5.png",
@@ -49,13 +49,18 @@
     },
     {
       "path": "theme/wallpapers/07-pic7.png",
-      "bytes": 2102508,
-      "sha256": "f95afae83c6e536a11814ba81b6336ac62b8870aa25588bf5822a3683ac988bc"
+      "bytes": 1732655,
+      "sha256": "df54d4c0911b72dfba4638ce9c45e06d252484dc313d4d9f950620b3cea8a302"
     },
     {
       "path": "theme/wallpapers/08-pic8.png",
       "bytes": 2076787,
       "sha256": "9d8c561f2a6f0c479b90240efe4e40926ad11f6ce55db1c34c5887f0eb6bc7ce"
+    },
+    {
+      "path": "theme/wallpapers/09-pic9.png",
+      "bytes": 2115310,
+      "sha256": "90919f698b2c3dc78fc7eba196de1b7e5112ccc5361fad400f3dee92bd18cf09"
     },
     {
       "path": "theme/wallpapers/10-pic10.png",
@@ -64,8 +69,8 @@
     },
     {
       "path": "theme/wallpapers/11-pic11.png",
-      "bytes": 1963513,
-      "sha256": "8ce2e6daec05b83021a936e258181fd061d011bba1b95bb76d45648b57b5eb5c"
+      "bytes": 2191003,
+      "sha256": "5065826306c220c5cb8c24fb84b6e8dcd24915e300ee12927dc8e31b8ddf4b1d"
     },
     {
       "path": "theme/wallpapers/12-pic12.png",
@@ -94,8 +99,8 @@
     },
     {
       "path": "theme/wallpapers/17-pic17.png",
-      "bytes": 1510278,
-      "sha256": "9c59beead812437ddc74d5a6f5d077f269044cb94d214c33ccda81ce4464066d"
+      "bytes": 1789776,
+      "sha256": "13a02700e81fda741f73a1a0f3657a8c9d8f3b896f41370c3c698eaa91ba636a"
     },
     {
       "path": "theme/wallpapers/18-pic18.png",
@@ -104,8 +109,8 @@
     },
     {
       "path": "theme/wallpapers/19-pic19.png",
-      "bytes": 1701437,
-      "sha256": "fdf775d0f20bea9757fe3d88d063d68bcd182f4790949046e3ebc2832441688e"
+      "bytes": 1824783,
+      "sha256": "7f766a35b7ccbe6278b799ae1fba4d0a378744d8466a6acc286475960feb5ce0"
     },
     {
       "path": "theme/wallpapers/20-pic20.png",
@@ -129,8 +134,138 @@
     },
     {
       "path": "theme/wallpapers/24-pic24.png",
-      "bytes": 2188766,
-      "sha256": "e85f9256f364535aff002b9b469542382c1daac14eb76aad3fb5a9b03458fc0e"
+      "bytes": 2098748,
+      "sha256": "babaea6d8f4f578061b9c20a24f8d78c486b65906687896cdee9058069c5e765"
+    },
+    {
+      "path": "theme/wallpapers/25-pic25.png",
+      "bytes": 2134390,
+      "sha256": "bc3306d7353fffa0db1cca94ccfe5bbd3364218c60981e95ac6922b4474d29b3"
+    },
+    {
+      "path": "theme/wallpapers/26-pic26.png",
+      "bytes": 2471565,
+      "sha256": "31e65ac57e40b4390cee87069ff8c9f406a48db988aed3514f4cfbca9df40ee0"
+    },
+    {
+      "path": "theme/wallpapers/27-pic27.png",
+      "bytes": 2269385,
+      "sha256": "74550ba44ad5f5de78b03886873cd30b93e8a393142844ce76ef983ce637b8da"
+    },
+    {
+      "path": "theme/wallpapers/28-pic28.png",
+      "bytes": 1839321,
+      "sha256": "a48808b975130a08dc0a3646214a25b662d1f47f555116c26a5e2a53ff112d63"
+    },
+    {
+      "path": "theme/wallpapers/29-pic29.png",
+      "bytes": 2146660,
+      "sha256": "7261e3c0838b290f7b220ca85b7a3c581f98cbd8ccd99c2bdf7f7ca82c1dbbae"
+    },
+    {
+      "path": "theme/wallpapers/30-pic30.png",
+      "bytes": 1753681,
+      "sha256": "9535b6c74a4e42cf26a11e364d5ae3db3696afbf00cd7b26e768797b5a6c17e9"
+    },
+    {
+      "path": "theme/wallpapers/31-pic31.png",
+      "bytes": 1677387,
+      "sha256": "69cd4700f55b33eddc1f56ff11c1ebe6262660b4c5a9bfd6a452289fc58f3e83"
+    },
+    {
+      "path": "theme/wallpapers/32-pic32.png",
+      "bytes": 1886363,
+      "sha256": "10c91997401ea6d15b8c9c4f15bf4d7ed9151991acea6305713b56f5b9c4d9a3"
+    },
+    {
+      "path": "theme/wallpapers/33-pic33.png",
+      "bytes": 2118337,
+      "sha256": "6696042b868c246e8912e6868b0b884c79900d43f298589270d18de170605193"
+    },
+    {
+      "path": "theme/wallpapers/34-pic34.png",
+      "bytes": 1970710,
+      "sha256": "fd5858f68d33ffecf8031e41ba5c48a0d196ed72eb33af8099af4c4173207d6b"
+    },
+    {
+      "path": "theme/wallpapers/35-pic35.png",
+      "bytes": 1942117,
+      "sha256": "3c658e5e172a8e529949559131dfad8b64fe26680f86faec5d2b1f47d2b70dda"
+    },
+    {
+      "path": "theme/wallpapers/36-pic36.png",
+      "bytes": 1971516,
+      "sha256": "1a2b48c8d60f0e253cdbd9b1d05f554588363ec9fb9a2bed69e456f063b4e144"
+    },
+    {
+      "path": "theme/wallpapers/37-pic37.png",
+      "bytes": 1964713,
+      "sha256": "ef60ba467f26a2fba645070977ff63935c7353cf6c2c34d764a32262b7b7df90"
+    },
+    {
+      "path": "theme/wallpapers/38-pic38.png",
+      "bytes": 1825930,
+      "sha256": "b917fb47e95767b370d15818e35e37c3b0d13e324dcd691ffdf0ab784b2751fd"
+    },
+    {
+      "path": "theme/wallpapers/39-pic39.png",
+      "bytes": 2171194,
+      "sha256": "d02fab64f27b5e296d3a4da83e82740abcaab53372bbbc7c21c9b307d951d1ac"
+    },
+    {
+      "path": "theme/wallpapers/40-pic40.png",
+      "bytes": 1817648,
+      "sha256": "e0936ffb85f22954ce3fabd58fd837f07b4861bb06c35d61c6385d91fa1ef6ee"
+    },
+    {
+      "path": "theme/wallpapers/41-pic41.png",
+      "bytes": 1988166,
+      "sha256": "1e64270b8f427767443a87edd1ebb20fefd4bce47c9bba6a08ba7b835f25249a"
+    },
+    {
+      "path": "theme/wallpapers/42-pic42.png",
+      "bytes": 2092169,
+      "sha256": "bc5a5a2e3ff361312d3154f2bbb4d7c5f98af6390bda0f3e4400fc7f1bdfed88"
+    },
+    {
+      "path": "theme/wallpapers/43-pic43.png",
+      "bytes": 2301639,
+      "sha256": "af7f89d49474c8c18944dc3e39169eefd02f141656ceebc91d7ae5489573907c"
+    },
+    {
+      "path": "theme/wallpapers/44-pic44.png",
+      "bytes": 2241602,
+      "sha256": "fb13abc7eab97523dd08a5de86ff564923665095e9d3e23702f8d964dd82de10"
+    },
+    {
+      "path": "theme/wallpapers/45-pic45.png",
+      "bytes": 2148989,
+      "sha256": "5f196aba117467feb952428c978cb9a1c59d56dd87536dc0290570891de5a34c"
+    },
+    {
+      "path": "theme/wallpapers/46-pic46.png",
+      "bytes": 2113883,
+      "sha256": "348114e5a3a5144e60eea4910dd9b9657318082a97b18c5604b004ea61d073dc"
+    },
+    {
+      "path": "theme/wallpapers/47-pic47.png",
+      "bytes": 2209019,
+      "sha256": "3e8459bb9850b1dd615896f1667ffb97ec164448524647be35535e6a8b19c48d"
+    },
+    {
+      "path": "theme/wallpapers/48-pic48.png",
+      "bytes": 2462647,
+      "sha256": "e53bec990fa76e01c0e167ff93acf12bf226fe777555c716afdd34ede0fe66c5"
+    },
+    {
+      "path": "theme/wallpapers/49-pic49.png",
+      "bytes": 2287514,
+      "sha256": "8ca3f3787751de88ef54db447262a56bc511db4c30d959d6b3a33174b73f9f74"
+    },
+    {
+      "path": "theme/wallpapers/50-pic50.png",
+      "bytes": 2205492,
+      "sha256": "b0d661d4e7ade4618d03b25297f27ae166c52871946d22c81f7c437f4cddf5fc"
     }
   ]
 }
