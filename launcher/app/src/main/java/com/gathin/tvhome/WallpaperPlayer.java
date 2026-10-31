@@ -32,6 +32,8 @@ import java.util.concurrent.Executors;
 
 /** Displays and rotates a theme's local wallpaper images while Home is visible. */
 final class WallpaperPlayer {
+    private static final String SHUFFLE_ORDER = "shuffle_order";
+    private static final String SHUFFLE_INDEX = "shuffle_index";
     private final FrameLayout root;
     private final ImageView image;
     private final int backgroundColor;
@@ -54,6 +56,7 @@ final class WallpaperPlayer {
     private boolean active;
     private boolean closed;
     private boolean loading;
+    private int pendingManualSteps;
     private String displayed = "";
     /** wallpaper_captions: the shown picture's name from wallpapers/captions.txt; null when off or there are none. */
     private final TextView caption;
@@ -85,7 +88,8 @@ final class WallpaperPlayer {
         String collection = collectionKey(files);
         if (!collection.equals(preferences.getString("collection", ""))) {
             preferences.edit().putString("collection", collection)
-                    .remove("image").remove("changed").remove("shuffle_seen").remove("shuffle_pool").apply();
+                    .remove("image").remove("changed").remove("shuffle_seen").remove("shuffle_pool")
+                    .remove(SHUFFLE_ORDER).remove(SHUFFLE_INDEX).apply();
         }
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         width = metrics.widthPixels;
@@ -140,6 +144,7 @@ final class WallpaperPlayer {
 
     void stop() {
         active = false;
+        pendingManualSteps = 0;
     }
 
     /** Drops the wallpaper texture when Home is hidden and Android asks the process to free memory. */
@@ -172,7 +177,13 @@ final class WallpaperPlayer {
 
     private File pickNext(List<File> pool, String previous) {
         if (WallpaperRotation.ORDER_SEQUENTIAL.equals(order)) return WallpaperRotation.next(pool, previous);
-        return WallpaperRotation.pickUnseen(pool, previous, shuffleHistory(pool), random);
+        List<File> sequence = shuffleSequence(pool, previous);
+        int index = indexOf(sequence, previous);
+        if (index >= sequence.size() - 1) {
+            sequence = startNewShuffleCycle(pool, previous);
+            index = -1;
+        }
+        return sequence.isEmpty() ? null : sequence.get(index + 1);
     }
 
     private void rememberDisplayed(File file, String previous, boolean updateTime) {
@@ -180,10 +191,83 @@ final class WallpaperPlayer {
         if (updateTime) editor.putLong("changed", System.currentTimeMillis());
         if (!WallpaperRotation.ORDER_SEQUENTIAL.equals(order)) {
             List<File> pool = playable();
-            Set<String> history = WallpaperRotation.shuffleHistory(pool, shuffleHistory(pool), previous, file.getName());
-            editor.putString("shuffle_pool", collectionKey(pool)).putStringSet("shuffle_seen", history);
+            List<File> sequence = shuffleSequence(pool, file.getName());
+            editor.putString("shuffle_pool", collectionKey(pool)).putInt(SHUFFLE_INDEX,
+                    indexOf(sequence, file.getName()));
         }
         editor.apply();
+    }
+
+    /** Keeps the shuffled order for a complete cycle so manual and timed changes traverse the same playlist. */
+    private List<File> shuffleSequence(List<File> pool, String current) {
+        String key = collectionKey(pool);
+        List<File> saved = new ArrayList<>();
+        String encoded = preferences.getString(SHUFFLE_ORDER, "");
+        String savedPool = preferences.getString("shuffle_pool", "");
+        if (key.equals(savedPool) && !encoded.isEmpty()) {
+            Set<String> names = new java.util.HashSet<>();
+            boolean valid = true;
+            for (String name : encoded.split("\\n")) {
+                File file = WallpaperRotation.find(pool, name);
+                if (file == null || !names.add(name)) {
+                    valid = false;
+                    break;
+                }
+                saved.add(file);
+            }
+            if (valid && saved.size() == pool.size()) return saved;
+        }
+
+        // Older builds stored only a set of seen names. Keep those at the start of this first saved sequence,
+        // put the current picture last among them, and shuffle the pictures that have not been shown yet.
+        Set<String> shown = shuffleHistory(pool);
+        File currentFile = WallpaperRotation.find(pool, current);
+        List<File> prior = new ArrayList<>(), remaining = new ArrayList<>();
+        for (File file : pool) {
+            String name = file.getName();
+            if (file.equals(currentFile)) continue;
+            if (shown.contains(name)) prior.add(file);
+            else remaining.add(file);
+        }
+        Collections.shuffle(prior, random);
+        Collections.shuffle(remaining, random);
+        saved.addAll(prior);
+        int index = -1;
+        if (currentFile != null) {
+            saved.add(currentFile);
+            index = saved.size() - 1;
+        }
+        saved.addAll(remaining);
+        saveShuffleSequence(pool, saved, index);
+        return saved;
+    }
+
+    private List<File> startNewShuffleCycle(List<File> pool, String previous) {
+        List<File> sequence = new ArrayList<>(pool);
+        Collections.shuffle(sequence, random);
+        if (sequence.size() > 1 && sequence.get(0).getName().equals(previous)) {
+            Collections.swap(sequence, 0, 1);
+        }
+        saveShuffleSequence(pool, sequence, -1);
+        return sequence;
+    }
+
+    private void saveShuffleSequence(List<File> pool, List<File> sequence, int index) {
+        StringBuilder encoded = new StringBuilder();
+        for (File file : sequence) {
+            if (encoded.length() > 0) encoded.append('\n');
+            encoded.append(file.getName());
+        }
+        preferences.edit().putString("shuffle_pool", collectionKey(pool))
+                .putString(SHUFFLE_ORDER, encoded.toString()).putInt(SHUFFLE_INDEX, index)
+                .remove("shuffle_seen").apply();
+    }
+
+    private static int indexOf(List<File> sequence, String name) {
+        for (int i = 0; i < sequence.size(); i++) {
+            if (sequence.get(i).getName().equals(name)) return i;
+        }
+        return -1;
     }
 
     void close() {
@@ -203,7 +287,38 @@ final class WallpaperPlayer {
             selected = pickNext(playable, previous);
         }
         if (selected == null || selected.getName().equals(displayed)) return;
-        File next = selected;
+        displayAsync(selected, previous, changed);
+    }
+
+    /** Change to the previous/next picture while Idle Mode is active. */
+    void stepByUser(int direction) {
+        if (!active || closed || files.isEmpty() || direction == 0) return;
+        int step = direction < 0 ? -1 : 1;
+        if (loading) {
+            pendingManualSteps += step;
+            return;
+        }
+        List<File> pool = playable();
+        String previous = preferences.getString("image", "");
+        File selected;
+        if (WallpaperRotation.ORDER_SEQUENTIAL.equals(order)) {
+            selected = WallpaperRotation.step(pool, previous, Collections.emptySet(), step, order);
+        } else {
+            List<File> sequence = shuffleSequence(pool, previous);
+            int index = indexOf(sequence, previous);
+            if (step > 0 && index == sequence.size() - 1) {
+                sequence = startNewShuffleCycle(pool, previous);
+                index = -1;
+            }
+            int target = index < 0 ? (step > 0 ? 0 : sequence.size() - 1)
+                    : Math.floorMod(index + step, sequence.size());
+            selected = sequence.isEmpty() ? null : sequence.get(target);
+        }
+        if (selected == null || selected.getName().equals(displayed)) return;
+        displayAsync(selected, previous, preferences.getLong("changed", 0));
+    }
+
+    private void displayAsync(File next, String previous, long changed) {
         loading = true;
         decoder.execute(() -> {
             Bitmap bitmap = decode(next);
@@ -223,6 +338,11 @@ final class WallpaperPlayer {
                 displayed = next.getName();
                 showCaption(true);
                 rememberDisplayed(next, previous, !displayed.equals(previous) || changed == 0);
+                if (pendingManualSteps != 0) {
+                    int step = pendingManualSteps > 0 ? 1 : -1;
+                    pendingManualSteps -= step;
+                    stepByUser(step);
+                }
             });
         });
     }

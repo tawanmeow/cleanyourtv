@@ -6,6 +6,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import java.lang.ref.WeakReference;
+import java.util.function.IntConsumer;
 import java.util.function.BooleanSupplier;
 
 /** Hides only the launcher shelf after inactivity; never sleeps the TV or stops wallpaper/media. */
@@ -17,17 +18,20 @@ final class LauncherIdleMode {
     private final int[] visibility;
     private final BooleanSupplier canEnter;
     private final Runnable beforeEnter, focusApps;
+    private final IntConsumer changeWallpaper;
     private WeakReference<View> previousFocus = new WeakReference<>(null);
     private boolean running, idle;
     private int wakingKey = KeyEvent.KEYCODE_UNKNOWN;
+    private int changingKey = KeyEvent.KEYCODE_UNKNOWN;
     private final Runnable timeout = this::enter;
 
     LauncherIdleMode(Activity activity, int dockOpacity, BooleanSupplier canEnter,
-                     Runnable beforeEnter, Runnable focusApps) {
+                     Runnable beforeEnter, Runnable focusApps, IntConsumer changeWallpaper) {
         this.activity = activity;
         this.canEnter = canEnter;
         this.beforeEnter = beforeEnter;
         this.focusApps = focusApps;
+        this.changeWallpaper = changeWallpaper;
         root = activity.findViewById(R.id.root);
         notice = activity.findViewById(R.id.idleModeNotice);
         shelf = new View[] {activity.findViewById(R.id.grid), activity.findViewById(R.id.hero),
@@ -48,6 +52,7 @@ final class LauncherIdleMode {
         running = false;
         root.removeCallbacks(timeout);
         wakingKey = KeyEvent.KEYCODE_UNKNOWN;
+        changingKey = KeyEvent.KEYCODE_UNKNOWN;
         leave(false);
     }
 
@@ -103,10 +108,23 @@ final class LauncherIdleMode {
             if (event.getAction() == KeyEvent.ACTION_UP) wakingKey = KeyEvent.KEYCODE_UNKNOWN;
             return true;
         }
+        if (key == changingKey && changingKey != KeyEvent.KEYCODE_UNKNOWN) {
+            if (event.getAction() == KeyEvent.ACTION_UP) changingKey = KeyEvent.KEYCODE_UNKNOWN;
+            return true;
+        }
+        if (idle && (key == KeyEvent.KEYCODE_DPAD_LEFT || key == KeyEvent.KEYCODE_DPAD_RIGHT)) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                changingKey = key;
+                if (event.getRepeatCount() == 0) changeWallpaper.accept(
+                        key == KeyEvent.KEYCODE_DPAD_LEFT ? -1 : 1);
+            }
+            return true;
+        }
         boolean wake = key == KeyEvent.KEYCODE_DPAD_LEFT || key == KeyEvent.KEYCODE_DPAD_UP
                 || key == KeyEvent.KEYCODE_DPAD_DOWN || key == KeyEvent.KEYCODE_DPAD_RIGHT
                 || key == KeyEvent.KEYCODE_DPAD_CENTER || key == KeyEvent.KEYCODE_ENTER
-                || key == KeyEvent.KEYCODE_NUMPAD_ENTER;
+                || key == KeyEvent.KEYCODE_NUMPAD_ENTER || key == KeyEvent.KEYCODE_BACK
+                || key == KeyEvent.KEYCODE_ESCAPE;
         if (!idle || !wake) return false;
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             wakingKey = key;

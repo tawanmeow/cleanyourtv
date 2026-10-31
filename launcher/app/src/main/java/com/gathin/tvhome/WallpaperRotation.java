@@ -101,6 +101,37 @@ final class WallpaperRotation {
         return images.get(0);
     }
 
+    /** Manual left/right browsing for sequential order; shuffle order is persisted by WallpaperPlayer. */
+    static File step(List<File> images, String previous, Set<String> shown, int direction, String order) {
+        if (images.isEmpty()) return null;
+        int step = direction < 0 ? -1 : 1;
+        int current = -1;
+        for (int i = 0; i < images.size(); i++) {
+            if (images.get(i).getName().equals(previous)) {
+                current = i;
+                break;
+            }
+        }
+        if (images.size() == 1) return images.get(0);
+        if (ORDER_SEQUENTIAL.equals(order)) {
+            int start = current < 0 ? (step > 0 ? -1 : 0) : current;
+            return images.get(Math.floorMod(start + step, images.size()));
+        }
+        if (current < 0) {
+            for (int i = step > 0 ? 0 : images.size() - 1;
+                 i >= 0 && i < images.size(); i += step) {
+                if (!shown.contains(images.get(i).getName())) return images.get(i);
+            }
+            return images.get(step > 0 ? 0 : images.size() - 1);
+        }
+        for (int offset = 1; offset < images.size(); offset++) {
+            File candidate = images.get(Math.floorMod(current + step * offset, images.size()));
+            if (!shown.contains(candidate.getName())) return candidate;
+        }
+        // The current shuffle cycle is complete. Start the next one without repeating this picture.
+        return images.get(Math.floorMod(current + step, images.size()));
+    }
+
     /** Picks the next picture for {@code order}; an unknown order keeps the historical shuffle. */
     static File pick(List<File> images, String previous, String order, Random random) {
         return ORDER_SEQUENTIAL.equals(order) ? next(images, previous) : pick(images, previous, random);

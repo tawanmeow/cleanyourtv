@@ -9,8 +9,8 @@
   "files": [
     {
       "path": "apk/CleanYourTV.apk",
-      "bytes": 607186,
-      "sha256": "9c31898556e4f6e3800fdd5dc25cbe7d6cfd6aa03097af0f98fc88cc0c8a814f"
+      "bytes": 608002,
+      "sha256": "190e742903dbd7ebeea9f45bb73efcd64d69e73f3ca9000f74fdb90871ad7767"
     },
     {
       "path": "theme/config.json",

@@ -885,7 +885,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
                 () -> firstTopButton().requestFocus(), () -> focusTile(lastFocused));
         launcherIdleMode = new LauncherIdleMode(this, cfg.dockOpacity,
                 () -> !reordering && appLibrary == null && openPopup == null && cardPrompt == null,
-                this::cancelPendingFocusScroll, () -> focusTile(lastFocused));
+                this::cancelPendingFocusScroll, () -> focusTile(lastFocused),
+                direction -> wallpaperPlayer.stepByUser(direction));
 
         // Hide the glass when focus leaves the tiles.
         getWindow().getDecorView().getViewTreeObserver().addOnGlobalFocusChangeListener((oldF, newF) -> {
