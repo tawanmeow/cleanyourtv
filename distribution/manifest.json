@@ -1,7 +1,7 @@
 {
   "format_version": 1,
   "application_id": "com.gathin.tvhome.terminal",
-  "wallpaper_count": 56,
+  "wallpaper_count": 55,
   "rotation_minutes": 2,
   "order": "shuffle",
   "cycle": "all-images-before-repeat",
@@ -31,11 +31,6 @@
       "path": "theme/wallpapers/03-pic3.webp",
       "bytes": 240596,
       "sha256": "898fd8d9ea0befc84c23db70e8e631f10177a5632b778ddd05969b6e6c3f93aa"
-    },
-    {
-      "path": "theme/wallpapers/04-pic4.webp",
-      "bytes": 217196,
-      "sha256": "48955c3aae0293ca3d7b868d84a7fae865c6d52cd72dc6eaa7f9db60e52ba183"
     },
     {
       "path": "theme/wallpapers/06-pic6.webp",
@@ -74,8 +69,8 @@
     },
     {
       "path": "theme/wallpapers/13-pic13.webp",
-      "bytes": 83946,
-      "sha256": "2f3cebaa8616e691eb9a04b6e1d2d785813142f9f5a295c5ebf86cf06fefcf5f"
+      "bytes": 188092,
+      "sha256": "0617177570891c1eedd7244f739fe171480c374b1f745574c091fc2893dd3b4a"
     },
     {
       "path": "theme/wallpapers/14-pic14.webp",
