@@ -149,8 +149,8 @@
     },
     {
       "path": "theme/wallpapers/27-pic27.png",
-      "bytes": 2269385,
-      "sha256": "74550ba44ad5f5de78b03886873cd30b93e8a393142844ce76ef983ce637b8da"
+      "bytes": 2184369,
+      "sha256": "53cf7a7c42f004cd324f7f36661f3e60d15862992106edcac0611e9e1ccbb7a5"
     },
     {
       "path": "theme/wallpapers/28-pic28.png",
@@ -214,8 +214,8 @@
     },
     {
       "path": "theme/wallpapers/40-pic40.png",
-      "bytes": 1817648,
-      "sha256": "e0936ffb85f22954ce3fabd58fd837f07b4861bb06c35d61c6385d91fa1ef6ee"
+      "bytes": 1716270,
+      "sha256": "99a67d6e17f012ccdaefbb5e816ea1f7636e60c7d1aeef29d53e2971a26ab382"
     },
     {
       "path": "theme/wallpapers/41-pic41.png",
@@ -244,8 +244,8 @@
     },
     {
       "path": "theme/wallpapers/46-pic46.png",
-      "bytes": 2113883,
-      "sha256": "348114e5a3a5144e60eea4910dd9b9657318082a97b18c5604b004ea61d073dc"
+      "bytes": 2076332,
+      "sha256": "31d18554621d16d940f1ff628bdd626874727c3363303f15f189336364c298d4"
     },
     {
       "path": "theme/wallpapers/47-pic47.png",
@@ -264,8 +264,8 @@
     },
     {
       "path": "theme/wallpapers/50-pic50.png",
-      "bytes": 2205492,
-      "sha256": "b0d661d4e7ade4618d03b25297f27ae166c52871946d22c81f7c437f4cddf5fc"
+      "bytes": 2238006,
+      "sha256": "aa8ce871967ecc8197fc03a5f7ef648361193c00202b31ccc5615b132e13e44d"
     }
   ]
 }

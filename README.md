@@ -1,7 +1,10 @@
 # CleanYourTV — custom TV build
 
-![CleanYourTV launcher screenshot](screenshot-latest.png)
 Downstairs is done. Next, I'll move upstairs. :D
+
+![CleanYourTV launcher screenshot](screenshot-menu.png)
+
+![CleanYourTV launcher screenshot](screenshot-idle.png)
 
 All message below generated from Codex
 
