@@ -143,6 +143,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private DockDecoration terminalPanel;
     private FrameLayout root;
     private WallpaperPlayer wallpaperPlayer;
+    private WeatherStatus weatherStatus;
     private SpotifyPlayer spotifyPlayer;
     private LauncherIdleMode launcherIdleMode;
     private GlassView glass;
@@ -486,6 +487,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         // the theme's background, so launch looks the same.
         getWindow().setBackgroundDrawable(null);
         wallpaperPlayer = new WallpaperPlayer(this, root, cfg);
+        weatherStatus = new WeatherStatus(this, this::updateGreeting);
         sky = findViewById(R.id.sky);
         sky.setIntensity(cfg.skyIntensity);
         glass = findViewById(R.id.glass);
@@ -1068,6 +1070,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         sky.update();
         wallpaperPlayer.start();
         spotifyPlayer.start();
+        weatherStatus.start();
         launcherIdleMode.start();
         handler.postDelayed(minuteTick, MINUTE_MS);
         if (festive && lamp != null) {
@@ -1239,6 +1242,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         resumed = false;
         if (launcherIdleMode != null) launcherIdleMode.stop();
         if (spotifyPlayer != null) spotifyPlayer.stop();
+        if (weatherStatus != null) weatherStatus.stop();
         // No UP reaches a paused Home, so a vendor-key hold it saw go down would still open its app later.
         // Only Home's own share is dropped: a key service that saw the same DOWN keeps its hold.
         RemoteKeys.release(this);
@@ -1316,6 +1320,7 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         if (gameDay != null) gameDay.shutdown();
         unregisterReceiver(packageReceiver);
         wallpaperPlayer.close();
+        if (weatherStatus != null) weatherStatus.close();
         if (launcherIdleMode != null) launcherIdleMode.stop();
         if (spotifyPlayer != null) spotifyPlayer.stop();
         ConnectivityManager cm = getSystemService(ConnectivityManager.class);
@@ -2496,7 +2501,8 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
         ViewGroup bar = findViewById(R.id.topButtons);
         for (int i = 0; i < bar.getChildCount(); i++) {
             View button = bar.getChildAt(i);
-            if (button != btnInputs && button.getVisibility() == View.VISIBLE) return button;
+            if (button != btnInputs && button.getId() != R.id.weatherStatus
+                    && button.getVisibility() == View.VISIBLE) return button;
         }
         return findViewById(R.id.btnSettings);
     }
@@ -2676,8 +2682,12 @@ public class MainActivity extends Activity implements AppAdapter.TileListener {
     private void updateGreeting() {
         // Keep the TV's language and time zone, but render Home's date in English.
         TextView homeDate = findViewById(R.id.date);
-        homeDate.setText(new java.text.SimpleDateFormat("EEE '·' d MMM", Locale.ENGLISH)
+        homeDate.setText(new java.text.SimpleDateFormat("EEE '•' d MMM yy", Locale.ENGLISH)
                 .format(new java.util.Date()).toUpperCase(Locale.ENGLISH));
+        TextView weather = findViewById(R.id.weatherStatus);
+        String reading = weatherStatus == null ? "" : weatherStatus.label();
+        weather.setText(reading.isEmpty() ? "" : reading + " •");
+        weather.setVisibility(reading.isEmpty() ? View.GONE : View.VISIBLE);
         int hour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
         int res;
         // Locale-specific day parts (app language on Android 13+).

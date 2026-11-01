@@ -334,6 +334,26 @@
                 android:orientation="horizontal">
 
                 <TextView
+                    android:id="@+id/weatherStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="6dp"
+                    android:gravity="center_vertical"
+                    android:fontFamily="@font/jetbrains_mono_medium"
+                    android:textSize="10.8sp"
+                    android:textColor="@color/tokyo_secondary"
+                    android:includeFontPadding="false"
+                    android:singleLine="true"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:layoutDirection="ltr"
+                    android:shadowColor="#8C040814"
+                    android:shadowDx="0"
+                    android:shadowDy="2"
+                    android:shadowRadius="10"
+                    android:visibility="gone" />
+
+                <TextView
                     android:id="@+id/btnWifi"
                     style="@style/HomeHeaderIcon"
                     android:maxWidth="180dp"

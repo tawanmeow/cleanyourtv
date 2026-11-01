@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="launcher_idle_hint" translatable="false">Idle Mode • ← / → to Change wallpaper • ↑ / ↓ / OK / Back to open apps</string>
+    <string name="launcher_idle_hint" translatable="false">Idle Mode • ← / → to change wallpaper • ↑ / ↓ / OK / Back to open apps</string>
 </resources>
