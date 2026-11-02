@@ -18,7 +18,8 @@ final class LauncherIdleMode {
     private final int[] visibility;
     private final BooleanSupplier canEnter;
     private final Runnable beforeEnter, focusApps;
-    private final IntConsumer changeWallpaper;
+    private final IntConsumer changeWallpaper, dimWallpaper;
+    private int idleDimPercent;
     private WeakReference<View> previousFocus = new WeakReference<>(null);
     private boolean running, idle;
     private int wakingKey = KeyEvent.KEYCODE_UNKNOWN;
@@ -26,12 +27,14 @@ final class LauncherIdleMode {
     private final Runnable timeout = this::enter;
 
     LauncherIdleMode(Activity activity, int dockOpacity, BooleanSupplier canEnter,
-                     Runnable beforeEnter, Runnable focusApps, IntConsumer changeWallpaper) {
+                     Runnable beforeEnter, Runnable focusApps, IntConsumer changeWallpaper,
+                     IntConsumer dimWallpaper) {
         this.activity = activity;
         this.canEnter = canEnter;
         this.beforeEnter = beforeEnter;
         this.focusApps = focusApps;
         this.changeWallpaper = changeWallpaper;
+        this.dimWallpaper = dimWallpaper;
         root = activity.findViewById(R.id.root);
         notice = activity.findViewById(R.id.idleModeNotice);
         shelf = new View[] {activity.findViewById(R.id.grid), activity.findViewById(R.id.hero),
@@ -78,6 +81,7 @@ final class LauncherIdleMode {
         previousFocus = new WeakReference<>(activity.getCurrentFocus());
         beforeEnter.run();
         idle = true;
+        dimWallpaper.accept(idleDimPercent);
         // Keep all original layout measurements and scroll positions intact.
         for (int i = 0; i < shelf.length; i++) {
             visibility[i] = shelf[i].getVisibility();
@@ -90,6 +94,7 @@ final class LauncherIdleMode {
     private void leave(boolean restoreFocus) {
         if (!idle) return;
         idle = false;
+        dimWallpaper.accept(0);
         notice.setVisibility(View.GONE);
         for (int i = 0; i < shelf.length; i++) shelf[i].setVisibility(visibility[i]);
         if (restoreFocus) {
@@ -117,6 +122,17 @@ final class LauncherIdleMode {
                 changingKey = key;
                 if (event.getRepeatCount() == 0) changeWallpaper.accept(
                         key == KeyEvent.KEYCODE_DPAD_LEFT ? -1 : 1);
+            }
+            return true;
+        }
+        if (idle && (key == KeyEvent.KEYCODE_DPAD_UP || key == KeyEvent.KEYCODE_DPAD_DOWN)) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN) {
+                changingKey = key;
+                if (event.getRepeatCount() == 0) {
+                    idleDimPercent = Math.max(0, Math.min(80, idleDimPercent
+                            + (key == KeyEvent.KEYCODE_DPAD_DOWN ? 20 : -20)));
+                    dimWallpaper.accept(idleDimPercent);
+                }
             }
             return true;
         }

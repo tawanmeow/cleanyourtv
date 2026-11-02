@@ -6,6 +6,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.LayerDrawable;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -36,6 +38,7 @@ final class WallpaperPlayer {
     private static final String SHUFFLE_INDEX = "shuffle_index";
     private final FrameLayout root;
     private final ImageView image;
+    private final ColorDrawable idleShade = new ColorDrawable(0x00000000);
     private final int backgroundColor;
     private final List<File> files;
     private final List<String> mirroredFiles;
@@ -97,8 +100,9 @@ final class WallpaperPlayer {
         image = new ImageView(context);
         image.setScaleType(ImageView.ScaleType.CENTER_CROP);
         // Styling only: the tint follows this existing image through every wallpaper change.
-        image.setForeground(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
-                new int[]{0x33080C19, 0x14080C19, 0x8C080C19}));
+        image.setForeground(new LayerDrawable(new android.graphics.drawable.Drawable[]{
+                new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
+                        new int[]{0x33080C19, 0x14080C19, 0x8C080C19}), idleShade}));
         image.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_NO);
         names = config.wallpaperCaptions && config.wallpaperEnabled && !files.isEmpty()
                 ? WallpaperCaptions.read(files.get(0).getParentFile()) : Collections.emptyMap();
@@ -135,6 +139,12 @@ final class WallpaperPlayer {
             playable = playable();
             first = pickNext(playable, previous);
         }
+    }
+
+    /** Extra Idle-only shade, above the wallpaper/gradient and below every UI element. */
+    void setIdleDimPercent(int percent) {
+        int bounded = Math.max(0, Math.min(80, percent));
+        idleShade.setColor((Math.round(bounded * 255f / 100f) << 24));
     }
 
     void start() {
